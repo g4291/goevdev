@@ -1,5 +1,9 @@
 package evdev
 
+/*
+* source: https://github.com/torvalds/linux/blob/master/include/uapi/linux/input-event-codes.h
+ */
+
 const INPUT_PROP_POINTER uint16 = 0x00        /* needs a pointer */
 const INPUT_PROP_DIRECT uint16 = 0x01         /* direct input devices */
 const INPUT_PROP_BUTTONPAD uint16 = 0x02      /* has button(s) under pad */
