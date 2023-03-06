@@ -6,6 +6,20 @@ import (
 	"time"
 )
 
+func inSLice(v uint16, s []uint16) bool {
+	if s == nil {
+		return false
+	}
+
+	for _, e := range s {
+		if e == v {
+			return true
+		}
+	}
+
+	return false
+}
+
 type Event struct {
 	Typ       uint16
 	Code      uint16
@@ -41,14 +55,15 @@ func NewReader(filename string) (*Reader, error) {
 }
 
 // read one event, skip sync, misc events
-func (r *Reader) ReadEvent() (*Event, error) {
+func (r *Reader) ReadEvent(skipTypes []uint16) (*Event, error) {
 	data := make([]byte, 24)
 	r.fh.Read(data)
 	e, err := NewEvent(data)
 	if err == nil {
 		// skip
-		if e.Typ == 0 || e.Typ == 4 {
-			return r.ReadEvent()
+		if inSLice(e.Typ, skipTypes) {
+			// read next
+			return r.ReadEvent(skipTypes)
 		}
 		return e, nil
 	}

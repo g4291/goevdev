@@ -38,7 +38,7 @@ func main() {
 	defer reader.Close()
 
 	for {
-		event, _ := reader.ReadEvent()
+		event, _ := reader.ReadEvent([]uint16{evdev.EV_SYN, evdev.EV_MSC})
 		l.Info("Event:", "\nTime: ", event.Timestamp, "\nType: ", event.Typ, "\nCode: ", event.Code, "\nValue:", event.Value)
 	}
 
